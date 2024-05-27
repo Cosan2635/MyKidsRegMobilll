@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/app_background"
+        android:padding="16dp">
+
+        <!-- Container for title and buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Title for "Alle børn" section -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Alle børn"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Button to select "Hentet" -->
+            <Button
+                android:id="@+id/buttonPickedUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hentet" />
+
+            <!-- Button to select "Ikke hentet" -->
+            <Button
+                android:id="@+id/buttonNotPickedUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ikke hentet" />
+        </LinearLayout>
+
+        <!-- RecyclerView for list of children -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChildren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_child_with_picker" />
+
+        <!-- Text indicating who picked up the child -->
+        <TextView
+            android:id="@+id/textViewPickedUpBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Afhenter: John Doe"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
