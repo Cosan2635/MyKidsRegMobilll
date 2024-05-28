@@ -31,12 +31,21 @@
                 android:textStyle="bold"
                 android:layout_marginEnd="8dp" />
 
-            <!-- Button for "Vælg afhenter" -->
+            <!-- Spinner for choosing collector -->
+            <Spinner
+                android:id="@+id/spinnerCollectors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"/>
+
+            <!-- Button for adding new collector -->
             <Button
-                android:id="@+id/buttonChooseCollector"
+                android:id="@+id/buttonAddCollector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vælg afhenter" />
+                android:text="+"
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <!-- RecyclerView for list of children -->

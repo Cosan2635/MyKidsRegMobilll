@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,9 +15,9 @@ import com.example.mykidsreg.models.StudentAdapter
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    private val collectors = mutableListOf("Parent 1", "Parent 2", "Relative 1")  // Example collectors
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,27 +30,31 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Example list of students
+        // Set up the RecyclerView
         val students = listOf(
             Student(id = 1, name = "John", lastName = "Doe", birthday = "2005-09-15", departmentId = 1),
             Student(id = 2, name = "Jane", lastName = "Smith", birthday = "2006-07-20", departmentId = 2)
         )
 
-        // Set up the RecyclerView
         val adapter = StudentAdapter(students) { position ->
-            // Handle item click
             val clickedStudent = students[position]
-            // Do something with clickedStudent, e.g., show a Toast or navigate to a detail view
             Toast.makeText(requireContext(), "Clicked: ${clickedStudent.name}", Toast.LENGTH_SHORT).show()
         }
 
         binding.recyclerViewChildren.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewChildren.adapter = adapter
 
-        // Handle button click
-        binding.buttonChooseCollector.setOnClickListener {
-            // Handle button click, e.g., show a dialog or navigate to another fragment
-            Toast.makeText(requireContext(), "Vælg afhenter clicked", Toast.LENGTH_SHORT).show()
+        // Set up the Spinner with collectors
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, collectors)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCollectors.adapter = spinnerAdapter
+
+        // Handle add collector button click
+        binding.buttonAddCollector.setOnClickListener {
+            // Example: Add a new collector
+            collectors.add("New Collector")
+            spinnerAdapter.notifyDataSetChanged()
+            Toast.makeText(requireContext(), "New collector added", Toast.LENGTH_SHORT).show()
         }
     }
 
