@@ -1,51 +1,63 @@
-package com.example.mykidsreg.models
-
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mykidsreg.R
+import com.example.mykidsreg.models.StudentLog
+import java.time.format.DateTimeFormatter
 
-class StudentAdapter(
-    private val items: List<Student>,
-    private val onItemClicked: (position: Int) -> Unit
-) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+class StudentLogAdapter(private val studentLogList: List<StudentLog>) : RecyclerView.Adapter<StudentLogAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textViewDate: TextView = view.findViewById(R.id.textViewDate)
+        val textViewName: TextView = view.findViewById(R.id.textViewName) // Placeholder for student name if needed
+    }
+
+    class ChildrenAdapter(
+        private val childrenList: List<StudentLog>,
+        private val itemClickListener: (StudentLog) -> Unit
+    ) : RecyclerView.Adapter<ChildrenAdapter.ViewHolder>() {
+
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val textViewDate: TextView = view.findViewById(R.id.textViewDate)
+            val textViewName: TextView = view.findViewById(R.id.textViewName)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_child, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val child = childrenList[position]
+            holder.textViewDate.text = child.date?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            holder.textViewName.text = "Child ID: ${child.studentId}" // Assuming studentId is used as name
+            holder.itemView.setOnClickListener { itemClickListener(child) }
+        }
+
+        override fun getItemCount(): Int {
+            return childrenList.size
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_child, parent, false)
+        return ViewHolder(view)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val studentLog = studentLogList[position]
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+        holder.textViewDate.text = studentLog.date?.format(dateFormatter)
+        holder.textViewName.text = "Student ${studentLog.studentId}" // Assuming a placeholder for name
+    }
 
     override fun getItemCount(): Int {
-        return items.size
-    }
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): StudentViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_child, viewGroup, false)
-        return StudentViewHolder(view, onItemClicked)
-    }
-
-    override fun onBindViewHolder(viewHolder: StudentViewHolder, position: Int) {
-        viewHolder.bind(items[position])
-    }
-
-    class StudentViewHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-        private val childName: TextView = itemView.findViewById(R.id.childName)
-        private val childBirthday: TextView = itemView.findViewById(R.id.childBirthday)
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        fun bind(student: Student) {
-            childName.text = student.name
-            childBirthday.text = student.birthday
-        }
-
-        override fun onClick(view: View) {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                onItemClicked(position)
-            }
-        }
+        return studentLogList.size
     }
 }
