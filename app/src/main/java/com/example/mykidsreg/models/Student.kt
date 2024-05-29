@@ -1,7 +1,5 @@
 package com.example.mykidsreg.models
-
 import java.io.Serializable
-
 data class Student(
     var id: Int,
     var name: String,
@@ -42,14 +40,4 @@ data class Student(
 }
 
 // Assuming ParentsRelation and StudentLog are defined similarly
-data class ParentsRelation(
-    var id: Int,
-    var relationType: String,
-    var studentId: Int
-) : Serializable
 
-data class StudentLog(
-    var id: Int,
-    var logDetail: String,
-    var studentId: Int
-) : Serializable
