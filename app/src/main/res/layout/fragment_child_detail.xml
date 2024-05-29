@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="Datetime"
             android:layout_marginBottom="8dp" />
 
         <!-- TextView for name -->
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="Navn:"
             android:layout_marginBottom="8dp" />
 
         <!-- TextView for arrival time -->
@@ -33,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="Ankomst:"
             android:layout_marginBottom="8dp" />
 
         <!-- TextView for collection time -->
@@ -41,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="Afhent:"
             android:layout_marginBottom="8dp" />
 
         <!-- TextView for reason for absence -->
@@ -49,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="Fraværs grund:"
             android:layout_marginBottom="8dp" />
 
         <!-- Switch for indicating if the child is on leave -->
@@ -56,6 +61,6 @@
             android:id="@+id/switchOnLeave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="On Leave" />
+            android:text="Ferie tilstand" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

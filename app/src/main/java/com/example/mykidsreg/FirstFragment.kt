@@ -1,3 +1,5 @@
+package com.example.mykidsreg
+
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -5,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mykidsreg.R
+import com.example.mykidsreg.adapters.StudentLogAdapter
 import com.example.mykidsreg.models.StudentLog
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class FirstFragment : Fragment() {
 
@@ -29,7 +31,9 @@ class FirstFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerViewChildren)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = StudentLogAdapter(studentLogList)
+        adapter = StudentLogAdapter(studentLogList) { studentLog ->
+            openChildDetailFragment(studentLog)
+        }
         recyclerView.adapter = adapter
 
         // Populate the list with real-time data
@@ -54,5 +58,17 @@ class FirstFragment : Fragment() {
             )
         }
         adapter.notifyDataSetChanged()
+    }
+
+    private fun openChildDetailFragment(studentLog: StudentLog) {
+        val fragment = ChildDetailFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("studentLog", studentLog)
+            }
+        }
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
+            addToBackStack(null)
+        }
     }
 }

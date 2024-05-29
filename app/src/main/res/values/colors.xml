@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="holiday_text">#FF6347</color> <!-- Tomato color for text -->
+    <color name="light_pink">#FFC0CB</color> <!-- Light pink color -->
 </resources>
