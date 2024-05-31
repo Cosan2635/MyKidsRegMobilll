@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -11,7 +13,6 @@
         android:background="@drawable/app_background"
         android:padding="16dp">
 
-        <!-- TextView for date -->
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="match_parent"
@@ -20,7 +21,6 @@
             android:text="Datetime"
             android:layout_marginBottom="8dp" />
 
-        <!-- TextView for name -->
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
@@ -29,7 +29,6 @@
             android:text="Navn:"
             android:layout_marginBottom="8dp" />
 
-        <!-- TextView for arrival time -->
         <TextView
             android:id="@+id/textViewArrivalTime"
             android:layout_width="match_parent"
@@ -38,7 +37,6 @@
             android:text="Ankomst:"
             android:layout_marginBottom="8dp" />
 
-        <!-- TextView for collection time -->
         <TextView
             android:id="@+id/textViewCollectionTime"
             android:layout_width="match_parent"
@@ -47,20 +45,16 @@
             android:text="Afhent:"
             android:layout_marginBottom="8dp" />
 
-        <!-- TextView for reason for absence -->
-        <TextView
-            android:id="@+id/textViewReasonForAbsence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Fraværs grund:"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Switch for indicating if the child is on leave -->
         <Switch
             android:id="@+id/switchOnLeave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ferie tilstand" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

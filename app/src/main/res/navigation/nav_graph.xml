@@ -6,27 +6,37 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.mykidsreg.LoginFragment"
+        android:name="com.example.mykidsreg.fragments.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_secondFragment"
-            app:destination="@id/secondFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/firstFragment"
-        android:name="com.example.mykidsreg.FirstFragment"
+        android:name="com.example.mykidsreg.fragments.FirstFragment"
         android:label="First Fragment"
-        tools:layout="@layout/fragment_first"/>
+        tools:layout="@layout/fragment_first">
+        <action
+            android:id="@+id/action_firstFragment_to_childDetailFragment"
+            app:destination="@id/childDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/childDetailFragment"
+        android:name="com.example.mykidsreg.fragments.ChildDetailFragment"
+        android:label="Child Detail"
+        tools:layout="@layout/fragment_child_detail">
+        <action
+            android:id="@+id/action_childDetailFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.example.mykidsreg.SecondFragment"
+        android:name="com.example.mykidsreg.fragments.SecondFragment"
         android:label="Second Fragment"
-        tools:layout="@layout/fragment_second_pedagogue"/>
-
+        tools:layout="@layout/fragment_second_pedagogue" />
 </navigation>

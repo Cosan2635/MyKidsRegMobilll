@@ -1,4 +1,4 @@
-package com.example.mykidsreg
+package com.example.mykidsreg.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.mykidsreg.R
 import com.example.mykidsreg.databinding.FragmentSecondBinding
 
 /**

@@ -1,33 +1,17 @@
 package com.example.mykidsreg.repository
 
-import com.example.mykidsreg.models.User
-import com.example.mykidsreg.models.UpdateUserDTO
-import com.example.mykidsreg.models.User_type
+import com.example.mykidsreg.models.Student
+import com.example.mykidsreg.models.StudentLog
+import com.example.mykidsreg.services.ApiService
 import com.example.mykidsreg.services.MyKidsRegService
 
-class MyKidsRegRepository(private val myKidsRegService: MyKidsRegService) {
+class MyKidsRegRepository(private val myKidsRegService: ApiService) {
 
-    suspend fun createUserWithTemporaryPassword(
-        username: String,
-        name: String,
-        last_name: String,
-        address: String,
-        zip_code: Int,
-        email: String,
-        mobileNumber: Long,
-        userType: User_type
-    ) {
-        myKidsRegService.createUserWithTemporaryPassword(
-            username,
-            name,
-            last_name,
-            address,
-            zip_code,
-            email,
-            mobileNumber,
-            userType
-        )
+    suspend fun getChildren(token: String): List<Student> {
+        return myKidsRegService.getChildren(token)
     }
 
-    // Implement other repository methods similarly by calling corresponding service methods...
+    suspend fun updateStudentLog(studentLog: StudentLog) {
+        myKidsRegService.updateStudentLog(studentLog)
+    }
 }

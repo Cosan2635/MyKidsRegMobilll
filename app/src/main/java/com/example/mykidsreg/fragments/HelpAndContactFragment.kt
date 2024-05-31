@@ -1,4 +1,4 @@
-package com.example.mykidsreg
+package com.example.mykidsreg.fragments
 
 import android.content.Intent
 import android.net.Uri

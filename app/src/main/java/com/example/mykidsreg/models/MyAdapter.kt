@@ -2,41 +2,63 @@ package com.example.mykidsreg.adapters
 
 import android.os.Build
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mykidsreg.R
-import com.example.mykidsreg.models.StudentLog
+import com.example.mykidsreg.databinding.ItemChildBinding
+import com.example.mykidsreg.models.Student
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class StudentLogAdapter(
-    private val studentLogList: List<StudentLog>,
-    private val itemClickListener: (StudentLog) -> Unit
-) : RecyclerView.Adapter<StudentLogAdapter.ViewHolder>() {
+class MyAdapter(private var students: List<Student>, private val onItemClicked: (Student) -> Unit) : RecyclerView.Adapter<MyAdapter.StudentViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textViewDate: TextView = view.findViewById(R.id.textViewDate)
-        val textViewName: TextView = view.findViewById(R.id.textViewName)
-    }
+    class StudentViewHolder(val binding: ItemChildBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_child, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+        val binding = ItemChildBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return StudentViewHolder(binding)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val studentLog = studentLogList[position]
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
+        val student = students[position]
+        holder.binding.apply {
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val date = LocalDate.parse(student.birthday, dateFormatter)
 
-        holder.textViewDate.text = studentLog.date?.format(dateFormatter)
-        holder.textViewName.text = "Student ${studentLog.studentId}"
-        holder.itemView.setOnClickListener { itemClickListener(studentLog) }
+            textViewDate.text = date.dayOfMonth.toString()
+            textViewDay.text = date.dayOfWeek.toString().substring(0, 3) // e.g., "Mon"
+            textViewName.text = student.name
+            val log = student.studentLogs.firstOrNull()
+            if (log != null) {
+                // Assuming startTime and endTime are strings in the format "HH:mm"
+                val startTime = log.startTime ?: "00:00"
+                val endTime = log.endTime ?: "00:00"
+                textViewTime.text = "$startTime - $endTime"
+                // Calculate progress based on start and end time
+                progressBarTime.progress = calculateProgress(startTime, endTime)
+            }
+            root.setOnClickListener {
+                onItemClicked(student)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return studentLogList.size
+        return students.size
+    }
+
+    fun updateData(newStudents: List<Student>) {
+        this.students = newStudents
+        notifyDataSetChanged()
+    }
+
+    private fun calculateProgress(startTime: String, endTime: String): Int {
+        // Implement your logic to calculate progress based on time
+        val start = startTime.split(":").map { it.toInt() }
+        val end = endTime.split(":").map { it.toInt() }
+        val startMinutes = start[0] * 60 + start[1]
+        val endMinutes = end[0] * 60 + end[1]
+        return (endMinutes - startMinutes) * 100 / (24 * 60) // Assuming a day has 24 hours
     }
 }

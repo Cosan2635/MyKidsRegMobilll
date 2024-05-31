@@ -1,4 +1,4 @@
-package com.example.mykidsreg
+package com.example.mykidsreg.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
