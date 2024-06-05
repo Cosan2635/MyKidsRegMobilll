@@ -1,15 +1,13 @@
-package com.example.mykidsreg.models
-
+import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
+@JsonClass(generateAdapter = true)
 data class Student(
-    var id: Int,
-    var name: String,
-    var lastName: String,
-    var birthday: String,
-    var departmentId: Int?,
-    var parentsRelations: List<ParentsRelation> = listOf(),
-    var studentLogs: List<StudentLog> = listOf()
+    var id: Int, // Ændret til id
+    var name: String, // Ændret til name
+    var last_name: String, // Ændret til lastName
+    var birthday: String, // Ændret til birthday
+    var department_id: Int?, // Ændret til departmentId
 ) : Serializable {
     constructor(
         name: String,
@@ -18,6 +16,6 @@ data class Student(
     ) : this(-1, name, lastName, birthday, null)
 
     override fun toString(): String {
-        return "$id, $name, $lastName, $birthday, $departmentId"
+        return "$id, $name, $last_name, $birthday, $department_id"
     }
 }

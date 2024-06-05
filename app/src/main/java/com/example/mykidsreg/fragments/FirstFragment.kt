@@ -1,27 +1,33 @@
 package com.example.mykidsreg.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mykidsreg.R
 import com.example.mykidsreg.adapters.MyAdapter
 import com.example.mykidsreg.databinding.FragmentFirstBinding
+import com.example.mykidsreg.repository.StudentRepository
+import com.example.mykidsreg.services.ApiClient
 import com.example.mykidsreg.viewmodels.StudentViewModel
 import com.example.mykidsreg.viewmodels.StudentViewModelFactory
-import com.example.mykidsreg.repository.MyKidsRegRepository
-import com.example.mykidsreg.services.ApiClient
 
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
+
     private val studentViewModel: StudentViewModel by viewModels {
-        StudentViewModelFactory(MyKidsRegRepository(ApiClient.apiService))
+        val apiService = ApiClient.apiService
+        val studentRepository = StudentRepository(apiService)
+        StudentViewModelFactory(studentRepository)
     }
 
     override fun onCreateView(
@@ -36,25 +42,47 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewChildren.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = MyAdapter(emptyList()) { student ->
-            val action = FirstFragmentDirections.actionFirstFragmentToChildDetailFragment(student.id)
+        val adapter = MyAdapter(emptyList()) { position ->
+            Log.d("FirstFragment", "Item clicked at position: $position")
+            val action = FirstFragmentDirections.actionFirstFragmentToChildDetailFragment(position)
             findNavController().navigate(action)
         }
         binding.recyclerViewChildren.adapter = adapter
 
-        // Antag at token er gemt i en delt præference eller på en anden måde hentet
-        val token = "Bearer " + getTokenFromPreferences()
+        val sharedPref = requireActivity().getSharedPreferences("myKidsReg", Context.MODE_PRIVATE)
+        val userId = sharedPref.getInt("userId", -1)
+        Log.d("FirstFragment", "Parent User ID from SharedPreferences: $userId")
 
-        studentViewModel.students.observe(viewLifecycleOwner, { students ->
-            adapter.updateData(students)
-        })
+        if (userId != -1) {
+            studentViewModel.getParentRelations(userId).observe(viewLifecycleOwner, Observer { parentRelations ->
+                if (parentRelations != null && parentRelations.isNotEmpty()) {
+                    val studentIds = parentRelations.map { it.student_id }
+                    Log.d("FirstFragment", "Student IDs for parent userId $userId: $studentIds")
 
-        studentViewModel.loadChildren(token)
-    }
+                    studentViewModel.getStudentsByIds(studentIds).observe(viewLifecycleOwner, Observer { students ->
+                        Log.d("FirstFragment", "Fetched students for parent userId $userId: $students")
 
-    private fun getTokenFromPreferences(): String {
-        // Implementer logikken for at hente token fra delt præference eller en anden kilde
-        return "your_token_here"
+                        val filteredStudents = students.filter { student ->
+                            parentRelations.any { it.student_id == student.id }
+                        }
+
+                        adapter.updateData(filteredStudents)
+                    })
+                } else {
+                    Log.d("FirstFragment", "No parent relations found for parent userId: $userId")
+                    Toast.makeText(requireContext(), "No parent relations found", Toast.LENGTH_SHORT).show()
+                }
+            })
+            studentViewModel.error.observe(viewLifecycleOwner, Observer { errorMessage ->
+                if (errorMessage != null) {
+                    Log.e("FirstFragment", "Error: $errorMessage")
+                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Log.e("FirstFragment", "Parent User ID not found in SharedPreferences")
+            Toast.makeText(requireContext(), "Parent User ID not found", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

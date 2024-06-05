@@ -1,9 +1,10 @@
 package com.example.mykidsreg.models
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 data class ParentsRelation(
-    var id: Int,
-    var userId: Int,
-    var studentId: Int
-) : Serializable{
-    constructor(userId: Int, studentId: Int) : this(-1, userId, studentId)
-}
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("user_id")
+    val user_id: Int,
+    @SerializedName("student_id")
+    val student_id: Int
+)

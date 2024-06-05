@@ -2,16 +2,20 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/LoginFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/LoginFragment"
         android:name="com.example.mykidsreg.fragments.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
     </fragment>
 
     <fragment
@@ -22,6 +26,9 @@
         <action
             android:id="@+id/action_firstFragment_to_childDetailFragment"
             app:destination="@id/childDetailFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -32,11 +39,24 @@
         <action
             android:id="@+id/action_childDetailFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.example.mykidsreg.fragments.SecondFragment"
         android:label="Second Fragment"
-        tools:layout="@layout/fragment_second_pedagogue" />
+        tools:layout="@layout/fragmentsecond" >
+        <action
+            android:id="@+id/action_secondFragment_to_loginFragment"
+            app:destination="@id/LoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/padagogue"
+        android:name="com.example.mykidsreg.Padagogue"
+        android:label="fragment_padagogue"
+        tools:layout="@layout/fragment_padagogue" />
 </navigation>

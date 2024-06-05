@@ -1,5 +1,6 @@
 package com.example.mykidsreg.models
 
+import Student
 import java.io.Serializable
 data class Department(
     var id: Int,

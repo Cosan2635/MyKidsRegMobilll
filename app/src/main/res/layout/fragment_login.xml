@@ -18,7 +18,7 @@
             android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="42dp"
-            android:background="@drawable/logo_image"
+            android:background="@drawable/app_background"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/white_rounded_edittext"
+            android:background="@drawable/app_background"
             android:drawableLeft="@drawable/icon_account"
             android:drawablePadding="8dp"
             android:hint="Indtast dit brugernavn"
