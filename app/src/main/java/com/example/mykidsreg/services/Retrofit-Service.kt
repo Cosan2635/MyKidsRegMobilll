@@ -38,7 +38,7 @@ interface ApiService {
     @GET("Student/{id}")
     suspend fun getStudentsByIdss(@Query("id") ids: List<Int>): List<Student>
     @GET("Student")
-    suspend fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
+    fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
 }
 
 object ApiClient {

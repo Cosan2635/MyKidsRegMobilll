@@ -13,14 +13,22 @@
         android:background="@drawable/app_background"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textViewDate"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Datetime"
-            android:layout_marginBottom="8dp" />
+            android:hint="Datetime"
+            app:hintEnabled="false">
 
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:background="@android:drawable/editbox_background"
+                android:dropDownHeight="200dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
@@ -50,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ferie tilstand" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDetails"

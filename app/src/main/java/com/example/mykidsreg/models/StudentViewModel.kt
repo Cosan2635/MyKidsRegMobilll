@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class StudentViewModel(private val studentRepository: StudentRepository) : ViewModel() {
 
     private val _students = MutableLiveData<List<Student>>()
-    val students: LiveData<List<Student>> get() = _students
+    val student_id: LiveData<List<Student>> get() = _students
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error

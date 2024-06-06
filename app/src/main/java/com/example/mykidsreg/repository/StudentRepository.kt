@@ -4,6 +4,7 @@ import Student
 import android.util.Log
 import com.example.mykidsreg.models.ParentsRelation
 import com.example.mykidsreg.models.TeacherRelation
+import com.example.mykidsreg.services.ApiClient.apiService
 import com.example.mykidsreg.services.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -42,7 +43,7 @@ class StudentRepository(private val apiService1: ApiService) {
 
     suspend fun getTeacherRelations(userId: Int): List<TeacherRelation> {
         return withContext(Dispatchers.IO) {
-            val response = apiService1.getTeacherRelations(userId).execute()
+            val response = apiService.getTeacherRelations(userId).execute()
             if (response.isSuccessful) {
                 response.body() ?: emptyList()
             } else {

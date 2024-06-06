@@ -87,7 +87,7 @@ class SecondFragment : Fragment() {
         Log.d(TAG, "Fetching departmentId for teacherId: $userId")
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val teacherRelations = studentViewModel.getTeacherRelations(userId).value
+                val teacherRelations = studentViewModel.getStudentsByTeacherId(userId).value
                 if (!teacherRelations.isNullOrEmpty()) {
                     val departmentId = teacherRelations.first().department_id
                     Log.d(TAG, "Department ID fetched: $departmentId")
