@@ -33,10 +33,12 @@ interface ApiService {
     fun getParentRelations(@Path("userId") userId: Int): Call<List<ParentsRelation>>
     @GET("TeacherRelation/user/{userId}")
     fun getTeacherRelations(@Path("userId") userId: Int): Call<List<TeacherRelation>>
-
-
+    @GET("Student/student/{departmentId}")
+    suspend fun getStudentsByDepartmentId(@Path("departmentId") departmentId: Int): Call<List<Student>>
+    @GET("Student/{id}")
+    suspend fun getStudentsByIdss(@Query("id") ids: List<Int>): List<Student>
     @GET("Student")
-    fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
+    suspend fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
 }
 
 object ApiClient {
@@ -50,27 +52,28 @@ object ApiClient {
         addInterceptor(interceptor)
     }.build()
 
-    private val moshi = Moshi.Builder()
-        .add(UserTypeAdapter())
-        .build()
-
-    val apiService: ApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(ApiService::class.java)
-    }
     private val gson = GsonBuilder()
         .setLenient()
         .create()
+
+    private val moshi = Moshi.Builder()
+        .add(UserTypeAdapter())
+        .build()
 
     val apiService1: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    val apiService: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(ApiService::class.java)
     }

@@ -13,7 +13,7 @@ data class Student(
         name: String,
         lastName: String,
         birthday: String
-    ) : this(-1, name, lastName, birthday, null)
+    ) : this(-1, name, lastName, birthday, 0)
 
     override fun toString(): String {
         return "$id, $name, $last_name, $birthday, $department_id"

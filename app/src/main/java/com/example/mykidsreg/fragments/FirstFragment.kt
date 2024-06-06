@@ -25,7 +25,7 @@ class FirstFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val studentViewModel: StudentViewModel by viewModels {
-        val apiService = ApiClient.apiService
+        val apiService = ApiClient.apiService1
         val studentRepository = StudentRepository(apiService)
         StudentViewModelFactory(studentRepository)
     }
@@ -43,7 +43,6 @@ class FirstFragment : Fragment() {
 
         binding.recyclerViewChildren.layoutManager = LinearLayoutManager(requireContext())
         val adapter = MyAdapter(emptyList()) { position ->
-            Log.d("FirstFragment", "Item clicked at position: $position")
             val action = FirstFragmentDirections.actionFirstFragmentToChildDetailFragment(position)
             findNavController().navigate(action)
         }
@@ -58,14 +57,11 @@ class FirstFragment : Fragment() {
                 if (parentRelations != null && parentRelations.isNotEmpty()) {
                     val studentIds = parentRelations.map { it.student_id }
                     Log.d("FirstFragment", "Student IDs for parent userId $userId: $studentIds")
-
                     studentViewModel.getStudentsByIds(studentIds).observe(viewLifecycleOwner, Observer { students ->
                         Log.d("FirstFragment", "Fetched students for parent userId $userId: $students")
-
                         val filteredStudents = students.filter { student ->
                             parentRelations.any { it.student_id == student.id }
                         }
-
                         adapter.updateData(filteredStudents)
                     })
                 } else {
