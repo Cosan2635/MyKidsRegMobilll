@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.mykidsreg.R
 
 class FooterNavigation : AppCompatActivity() {
@@ -34,7 +35,7 @@ class FooterNavigation : AppCompatActivity() {
 
         button4.setOnClickListener {
             Toast.makeText(this, "Button 4 clicked", Toast.LENGTH_SHORT).show()
-            // Handle click for button 4
+        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.help_and_contact)
         }
     }
 }

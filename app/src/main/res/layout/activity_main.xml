@@ -8,6 +8,7 @@
     tools:context=".fragments.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -24,5 +25,4 @@
 
     <include layout="@layout/content_main" />
 
-    <include layout="@layout/footer_navigation" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

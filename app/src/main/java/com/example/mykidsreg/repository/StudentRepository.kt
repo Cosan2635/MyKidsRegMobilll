@@ -2,9 +2,9 @@ package com.example.mykidsreg.repository
 
 import Student
 import android.util.Log
+import com.example.mykidsreg.models.Department
 import com.example.mykidsreg.models.ParentsRelation
 import com.example.mykidsreg.models.TeacherRelation
-import com.example.mykidsreg.services.ApiClient.apiService
 import com.example.mykidsreg.services.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,10 +40,28 @@ class StudentRepository(private val apiService1: ApiService) {
             }
         }
     }
+    suspend fun getDepartmentsByIds(department_id: List<Int>): List<Department> {
+        val nonNulldepartment_id = department_id.filterNotNull()
+
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.d("StudentRepository", "Fetching Departments by IDs: $nonNulldepartment_id")
+                val response = apiService1.getDepartmentByIds(nonNulldepartment_id).execute()
+                if (response.isSuccessful) {
+                    response.body() ?: emptyList()
+                } else {
+                    throw Exception("Failed to fetch departments by IDs: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Log.e("StudentRepository", "Exception: ${e.message}")
+                throw e
+            }
+        }
+    }
 
     suspend fun getTeacherRelations(userId: Int): List<TeacherRelation> {
         return withContext(Dispatchers.IO) {
-            val response = apiService.getTeacherRelations(userId).execute()
+            val response = apiService1.getTeacherRelations(userId).execute()
             if (response.isSuccessful) {
                 response.body() ?: emptyList()
             } else {
@@ -72,18 +90,13 @@ class StudentRepository(private val apiService1: ApiService) {
     }
 
     suspend fun getStudentsByDepartmentId(departmentId: Int): List<Student> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = apiService1.getStudentsByDepartmentId(departmentId).execute()
-                if (response.isSuccessful) {
-                    response.body() ?: emptyList()
-                } else {
-                    throw Exception("Failed to fetch students by department ID: ${response.message()}")
-                }
-            } catch (e: Exception) {
-                Log.e("StudentRepository", "Exception: ${e.message}")
-                throw e
-            }
+        return try {
+            apiService1.getStudentsByDepartmentId(departmentId)
+        } catch (e: Exception) {
+            Log.e("StudentRepository", "Exception: ${e.message}")
+            throw e
         }
     }
+
+
 }

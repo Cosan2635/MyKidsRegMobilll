@@ -1,6 +1,7 @@
 package com.example.mykidsreg.fragments
 
 
+import MyAdapter
 import Student
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mykidsreg.R
-import com.example.mykidsreg.adapters.MyAdapter
+
 import com.example.mykidsreg.databinding.FragmentChildDetailBinding
 
 import com.example.mykidsreg.repository.StudentRepository

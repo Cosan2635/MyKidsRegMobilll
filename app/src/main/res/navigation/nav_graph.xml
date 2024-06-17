@@ -29,6 +29,9 @@
         <argument
             android:name="position"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_firstFragment_to_fragment_message"
+            app:destination="@id/fragment_message" />
     </fragment>
 
     <fragment
@@ -59,4 +62,13 @@
         android:name="com.example.mykidsreg.Padagogue"
         android:label="fragment_padagogue"
         tools:layout="@layout/fragment_padagogue" />
+    <fragment
+        android:id="@+id/fragment_message"
+        android:name="com.example.mykidsreg.fragment_message"
+        android:label="fragment_message2"
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_fragment_message_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
 </navigation>

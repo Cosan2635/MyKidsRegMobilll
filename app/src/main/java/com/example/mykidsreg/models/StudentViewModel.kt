@@ -106,19 +106,27 @@ class StudentViewModel(private val studentRepository: StudentRepository) : ViewM
         return studentsLiveData
     }
 
-    fun getStudentsByTeacherId(userId: Int): LiveData<List<Student>> {
-        val students = MutableLiveData<List<Student>>()
+    fun getStudentsByTeacherId(teacherId: Int): LiveData<List<Student>> {
+        val studentsLiveData = MutableLiveData<List<Student>>()
+
         viewModelScope.launch {
             try {
-                val relations = studentRepository.getTeacherRelations(userId)
-                val student_id = relations.map { it.user_id }
-                val studentList = studentRepository.getStudentsByIds(student_id)
-                students.value = studentList
+                val teacherRelations = studentRepository.getTeacherRelations(teacherId)
+                val departmentIds = teacherRelations.map { it.departmentId }
+
+                if (departmentIds.isNotEmpty()) {
+                    val students = studentRepository.getStudentsByIds(departmentIds)
+                    studentsLiveData.postValue(students)
+                } else {
+                    studentsLiveData.postValue(emptyList())
+                }
             } catch (e: Exception) {
-                _error.value = "Failed to load students by teacher ID: ${e.message}"
-                Log.e("StudentViewModel", "Exception: ${e.message}")
+                Log.e("StudentViewModel", "Failed to fetch students: ${e.message}")
+                studentsLiveData.postValue(emptyList())
             }
         }
-        return students
+
+        return studentsLiveData
     }
+
 }

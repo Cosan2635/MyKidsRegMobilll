@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,14 +26,26 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var userViewModel: UserViewModel
+    private lateinit var editTextPassword: EditText
+    private lateinit var passwordToggleImageView: ImageView
+    private var isPasswordVisible: Boolean = false
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        // Inflate the layout for this fragment using DataBindingUtil
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         val view = binding.root
+
+        // Find views for password visibility toggle
+        editTextPassword = view.findViewById(R.id.editTextPassword)
+        passwordToggleImageView = view.findViewById(R.id.passwordToggleImageView)
+
+        passwordToggleImageView.setOnClickListener {
+            togglePasswordVisibility()
+        }
 
         // Initialize ViewModel
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
@@ -45,13 +60,13 @@ class LoginFragment : Fragment() {
 
         // Observe loginResult
         userViewModel.loginResult.observe(viewLifecycleOwner, Observer { user ->
-            Log.d("LOGIN", "Error: ${user}")
+            Log.d("LOGIN", "User: ${user}")
             if (user != null) {
                 Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
 
                 // Save user ID in SharedPreferences
                 val sharedPref = requireActivity().getSharedPreferences("myKidsReg", Context.MODE_PRIVATE)
-                with (sharedPref.edit()) {
+                with(sharedPref.edit()) {
                     putInt("userId", user.user_Id)
                     apply()
                 }
@@ -88,6 +103,21 @@ class LoginFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Hide password
+            editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            passwordToggleImageView.setImageResource(R.drawable.icon_password_eye)
+        } else {
+            // Show password
+            editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            passwordToggleImageView.setImageResource(R.drawable.icon_password_eye)
+        }
+        // Move the cursor to the end of the text
+        editTextPassword.setSelection(editTextPassword.text.length)
+        isPasswordVisible = !isPasswordVisible
     }
 
     private fun navigateBasedOnUserType(userType: Int?) {

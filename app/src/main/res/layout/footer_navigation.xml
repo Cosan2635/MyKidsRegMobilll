@@ -2,7 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/fab_margin"
+    android:layout_gravity="end"
+
+    >
 
     <LinearLayout
         android:id="@+id/footerLayout"
@@ -13,39 +17,47 @@
         android:gravity="center_vertical"
         tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Button 1"
-            android:textColor="#ffffff"/>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Button 2"
-            android:textColor="#ffffff"/>
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Button 3"
-            android:textColor="#ffffff"/>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Button 4"
-            android:textColor="#ffffff"/>
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button 1"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="668dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button 2"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="668dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button 3"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteX="207dp"
+        tools:layout_editor_absoluteY="668dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button 4"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteX="309dp"
+        tools:layout_editor_absoluteY="668dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

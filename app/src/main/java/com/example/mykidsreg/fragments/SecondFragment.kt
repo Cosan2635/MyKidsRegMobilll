@@ -1,5 +1,6 @@
 package com.example.mykidsreg.fragments
 
+import MyAdapter
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -10,15 +11,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mykidsreg.adapters.MyAdapter
+
 import com.example.mykidsreg.databinding.FragmentsecondBinding
 import com.example.mykidsreg.repository.StudentRepository
 import com.example.mykidsreg.services.ApiClient
 import com.example.mykidsreg.viewmodels.StudentViewModel
 import com.example.mykidsreg.viewmodels.StudentViewModelFactory
-import kotlinx.coroutines.launch
 
 class SecondFragment : Fragment() {
 
@@ -56,50 +55,21 @@ class SecondFragment : Fragment() {
         Log.d(TAG, "Retrieved userId from SharedPreferences: $userId")
 
         if (userId != -1) {
-            fetchDepartmentIdForTeacher(userId) { departmentId ->
-                if (departmentId != null) {
-                    Log.d(TAG, "Valid departmentId found: $departmentId, fetching students")
-                    studentViewModel.getStudentsByDepartmentId(departmentId).observe(viewLifecycleOwner, Observer { students ->
-                        if (students != null && students.isNotEmpty()) {
-                            adapter.updateData(students)
-                        } else {
-                            Log.d(TAG, "No students data received")
-                            Toast.makeText(requireContext(), "No students data received", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+            studentViewModel.getStudentsByTeacherId(userId).observe(viewLifecycleOwner, Observer { students ->
+                if (students != null && students.isNotEmpty()) {
+                    Log.d(TAG, "Students data received: ${students.size}")
+                    adapter.updateData(students)
                 } else {
-                    Log.w(TAG, "Invalid departmentId, fetching students will not proceed")
+                    Log.d(TAG, "No students data received")
+                    Toast.makeText(
+                        requireContext(),
+                        "No students data received",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            }
+            })
         } else {
             Log.w(TAG, "Invalid userId, fetching students will not proceed")
-        }
-
-        studentViewModel.error.observe(viewLifecycleOwner, Observer { errorMessage ->
-            if (errorMessage != null) {
-                Log.e(TAG, "Error fetching students: $errorMessage")
-                Toast.makeText(requireContext(), "Error fetching students", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun fetchDepartmentIdForTeacher(userId: Int, callback: (Int?) -> Unit) {
-        Log.d(TAG, "Fetching departmentId for teacherId: $userId")
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                val teacherRelations = studentViewModel.getStudentsByTeacherId(userId).value
-                if (!teacherRelations.isNullOrEmpty()) {
-                    val departmentId = teacherRelations.first().department_id
-                    Log.d(TAG, "Department ID fetched: $departmentId")
-                    callback(departmentId)
-                } else {
-                    Log.e(TAG, "No teacher relations found for user ID: $userId")
-                    callback(null)
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error fetching departmentId: ${e.message}")
-                callback(null)
-            }
         }
     }
 
@@ -108,3 +78,4 @@ class SecondFragment : Fragment() {
         _binding = null
     }
 }
+

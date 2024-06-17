@@ -1,6 +1,7 @@
 package com.example.mykidsreg.services
 
 import Student
+import com.example.mykidsreg.models.Department
 import com.example.mykidsreg.models.ParentsRelation
 import com.example.mykidsreg.models.TeacherRelation
 import com.example.mykidsreg.models.UserTypeAdapter
@@ -33,16 +34,21 @@ interface ApiService {
     fun getParentRelations(@Path("userId") userId: Int): Call<List<ParentsRelation>>
     @GET("TeacherRelation/user/{userId}")
     fun getTeacherRelations(@Path("userId") userId: Int): Call<List<TeacherRelation>>
+    @GET("TeacherRelation/department/{department_id}")
+    fun getDepartmentTeacherRelations(@Path("department_id") department_id: Int): Call<List<TeacherRelation>>
     @GET("Student/student/{departmentId}")
-    suspend fun getStudentsByDepartmentId(@Path("departmentId") departmentId: Int): Call<List<Student>>
+    suspend fun getStudentsByDepartmentId(@Path("departmentId") departmentId: Int): List<Student>
     @GET("Student/{id}")
     suspend fun getStudentsByIdss(@Query("id") ids: List<Int>): List<Student>
     @GET("Student")
     fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
+    @GET("Department")
+    fun getDepartmentByIds(@Query("id") ids: List<Int>): Call<List<Department>>
+
 }
 
 object ApiClient {
-    private const val BASE_URL = "http://172.29.16.1:5191/api/"
+    private const val BASE_URL = "http://172.28.192.1:5191/api/"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

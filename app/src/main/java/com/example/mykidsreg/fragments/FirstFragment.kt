@@ -1,5 +1,6 @@
 package com.example.mykidsreg.fragments
 
+import MyAdapter
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mykidsreg.adapters.MyAdapter
 import com.example.mykidsreg.databinding.FragmentFirstBinding
 import com.example.mykidsreg.repository.StudentRepository
 import com.example.mykidsreg.services.ApiClient
