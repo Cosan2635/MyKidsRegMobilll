@@ -18,4 +18,9 @@ data class Student(
     override fun toString(): String {
         return "$id, $name, $last_name, $birthday, $department_id"
     }
+
+        fun isRegistered(): Boolean {
+            // Implementation to determine if student is registered
+            return true // Example implementation, replace with your logic
+        }
 }

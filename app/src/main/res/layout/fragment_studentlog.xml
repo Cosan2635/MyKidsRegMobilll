@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background"
+    android:theme="@style/ThemeOverlay.MyKidsReg.FullscreenContainer"
+    tools:context=".fragments.StudentLogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:paddingBottom="16dp"/>
+
+        <CheckBox
+            android:id="@+id/arrival_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ankommet"
+            android:textColor="@color/black"
+            android:onClick="onArrivalCheckboxClicked"/>
+
+        <EditText
+            android:id="@+id/start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ankommet"
+            android:textColorHint="@color/black"
+            android:textColor="@color/green"
+            android:inputType="time"
+            android:focusable="false"
+            android:clickable="false"/>
+
+        <CheckBox
+            android:id="@+id/departure_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gået"
+            android:onClick="onDepartureCheckboxClicked"/>
+
+        <EditText
+            android:id="@+id/end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gået"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:inputType="time"
+            android:focusable="false"
+            android:clickable="false"/>
+        <EditText
+            android:id="@+id/absence_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:hint="Årsag til fravær (hvis relevant)"/>
+
+
+        <CheckBox
+            android:id="@+id/is_on_leave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Er på orlov"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Registrer"/>
+
+        <Button
+            android:id="@+id/message_button"
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:text="Send besked til forældre"/>
+
+    </LinearLayout>
+</FrameLayout>

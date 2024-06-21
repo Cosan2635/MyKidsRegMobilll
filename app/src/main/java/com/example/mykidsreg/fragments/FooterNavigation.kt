@@ -1,41 +1,59 @@
-package com.example.mykidsreg.fragments
-
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.mykidsreg.R
 
-class FooterNavigation : AppCompatActivity() {
+class FooterFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.footer_navigation)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.footer_navigation, container, false)
 
-        val button1 = findViewById<Button>(R.id.button1)
-        val button2 = findViewById<Button>(R.id.button2)
-        val button3 = findViewById<Button>(R.id.button3)
-        val button4 = findViewById<Button>(R.id.button4)
+        // Find buttons
+        val button1 = view.findViewById<Button>(R.id.button1)
+        val button2 = view.findViewById<Button>(R.id.button2)
+        val button3 = view.findViewById<Button>(R.id.button3)
+        val button4 = view.findViewById<Button>(R.id.button4)
 
+        // Set OnClickListener for each button
         button1.setOnClickListener {
-            Toast.makeText(this, "Button 1 clicked", Toast.LENGTH_SHORT).show()
-            // Handle click for button 1
+            // Handle button click
+            handleButtonClick(button1)
         }
 
         button2.setOnClickListener {
-            Toast.makeText(this, "Button 2 clicked", Toast.LENGTH_SHORT).show()
-            // Handle click for button 2
+            // Handle button click
+            handleButtonClick(button2)
         }
 
         button3.setOnClickListener {
-            Toast.makeText(this, "Button 3 clicked", Toast.LENGTH_SHORT).show()
-            // Handle click for button 3
+            findNavController().navigate(R.id.action_firstFragment_to_fragment_message)
+            handleButtonClick(button3)
         }
 
         button4.setOnClickListener {
-            Toast.makeText(this, "Button 4 clicked", Toast.LENGTH_SHORT).show()
-        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.help_and_contact)
+            // Navigate to the desired destination using the navigation controller
+            findNavController().navigate(R.id.action_firstFragment_to_padagogue)
+            handleButtonClick(button4)
         }
+
+        return view
+    }
+
+    private fun handleButtonClick(button: Button) {
+        // Change background color to green when button is pressed
+        button.setBackgroundResource(R.color.green)
+
+        // Optionally, you can reset the background color after a delay or on another event
+        button.postDelayed({
+            button.setBackgroundResource(R.drawable.button_selector)
+        }, 500) // 500 milliseconds delay, adjust as needed
     }
 }

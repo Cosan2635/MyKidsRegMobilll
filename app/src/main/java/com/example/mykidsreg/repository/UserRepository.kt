@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class UserRepository {
-    private val url = "http://172.28.192.1:5191/api/Users/"
+    private val url = "http://192.168.1.130:5191/api/Users/"
     private val userService: UserService
     val userLiveData: MutableLiveData<List<Users>> = MutableLiveData()
     val errorMessageLiveData: MutableLiveData<String> = MutableLiveData()

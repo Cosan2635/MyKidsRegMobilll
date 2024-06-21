@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.mykidsreg.databinding.FragmentsecondBinding
@@ -44,32 +45,44 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated called")
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = MyAdapter(emptyList()) { position ->
-            Log.d(TAG, "Item clicked at position: $position")
-        }
-        binding.recyclerView.adapter = adapter
-
-        val sharedPref = requireActivity().getSharedPreferences("myKidsReg", Context.MODE_PRIVATE)
-        val userId = sharedPref.getInt("userId", -1)
-        Log.d(TAG, "Retrieved userId from SharedPreferences: $userId")
-
-        if (userId != -1) {
-            studentViewModel.getStudentsByTeacherId(userId).observe(viewLifecycleOwner, Observer { students ->
-                if (students != null && students.isNotEmpty()) {
-                    Log.d(TAG, "Students data received: ${students.size}")
-                    adapter.updateData(students)
-                } else {
-                    Log.d(TAG, "No students data received")
-                    Toast.makeText(
-                        requireContext(),
-                        "No students data received",
-                        Toast.LENGTH_SHORT
-                    ).show()
+        try {
+            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            val adapter = MyAdapter(emptyList()) { position ->
+                Log.d(TAG, "Item clicked at position: $position")
+                try {
+                    val action = SecondFragmentDirections.actionSecondFragmentToStudentlog(position)
+                    findNavController().navigate(action)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Navigation error", e)
+                    Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show()
                 }
-            })
-        } else {
-            Log.w(TAG, "Invalid userId, fetching students will not proceed")
+            }
+            binding.recyclerView.adapter = adapter
+
+            val sharedPref = requireActivity().getSharedPreferences("myKidsReg", Context.MODE_PRIVATE)
+            val userId = sharedPref.getInt("userId", -1)
+            Log.d(TAG, "Retrieved userId from SharedPreferences: $userId")
+
+            if (userId != -1) {
+                studentViewModel.getStudentsByTeacherId(userId).observe(viewLifecycleOwner, Observer { students ->
+                    if (students != null && students.isNotEmpty()) {
+                        Log.d(TAG, "Students data received: ${students.size}")
+                        adapter.updateData(students)
+                    } else {
+                        Log.d(TAG, "No students data received")
+                        Toast.makeText(
+                            requireContext(),
+                            "Ingen elevdata modtaget",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            } else {
+                Log.w(TAG, "Ugyldig bruger ID, henter elever fortsætter ikke")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up RecyclerView", e)
+            Toast.makeText(requireContext(), "Error setting up view", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,4 +91,3 @@ class SecondFragment : Fragment() {
         _binding = null
     }
 }
-

@@ -79,7 +79,9 @@ class FirstFragment : Fragment() {
             Log.e("FirstFragment", "Parent User ID not found in SharedPreferences")
             Toast.makeText(requireContext(), "Parent User ID not found", Toast.LENGTH_SHORT).show()
         }
+
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

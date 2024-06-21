@@ -1,5 +1,6 @@
 package com.example.mykidsreg.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -33,6 +34,7 @@ class HelpAndContactFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun dialPhoneNumber(phoneNumber: String) {
         val intent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:$phoneNumber")

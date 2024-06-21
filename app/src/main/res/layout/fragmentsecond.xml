@@ -31,19 +31,19 @@
                 android:textStyle="bold"
                 android:layout_marginEnd="8dp" />
 
-            <!-- Button to select "Hentet" -->
-            <Button
-                android:id="@+id/buttonPickedUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hentet" />
+<!--            &lt;!&ndash; Button to select "Hentet" &ndash;&gt;-->
+<!--            <Button-->
+<!--                android:id="@+id/buttonPickedUp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Hentet" />-->
 
-            <!-- Button to select "Ikke hentet" -->
-            <Button
-                android:id="@+id/buttonNotPickedUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ikke hentet" />
+<!--            &lt;!&ndash; Button to select "Ikke hentet" &ndash;&gt;-->
+<!--            <Button-->
+<!--                android:id="@+id/buttonNotPickedUp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Ikke hentet" />-->
         </LinearLayout>
 
         <!-- RecyclerView for list of children -->

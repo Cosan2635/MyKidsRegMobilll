@@ -2,6 +2,7 @@ package com.example.mykidsreg.services
 
 import Student
 import com.example.mykidsreg.models.Department
+import com.example.mykidsreg.models.Message
 import com.example.mykidsreg.models.ParentsRelation
 import com.example.mykidsreg.models.TeacherRelation
 import com.example.mykidsreg.models.UserTypeAdapter
@@ -44,11 +45,15 @@ interface ApiService {
     fun getStudentsByIds(@Query("id") ids: List<Int>): Call<List<Student>>
     @GET("Department")
     fun getDepartmentByIds(@Query("id") ids: List<Int>): Call<List<Department>>
+    @GET("Message/Message/{user_id}")
+    fun getMessages(@Path("userId") userId: Int): Call<List<Message>>
+    @POST("messages")
+    fun sendMessage(@Body message: Message): Call<Message>
 
 }
 
 object ApiClient {
-    private const val BASE_URL = "http://172.28.192.1:5191/api/"
+    private const val BASE_URL = "http://192.168.1.130:5191/api/"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

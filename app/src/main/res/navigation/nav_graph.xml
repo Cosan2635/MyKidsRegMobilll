@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_firstFragment_to_fragment_message"
             app:destination="@id/fragment_message" />
+        <action
+            android:id="@+id/action_firstFragment_to_padagogue"
+            app:destination="@id/padagogue" />
     </fragment>
 
     <fragment
@@ -55,13 +58,26 @@
         <action
             android:id="@+id/action_secondFragment_to_loginFragment"
             app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_secondFragment_to_fragment_message"
+            app:destination="@id/fragment_message" />
+        <action
+            android:id="@+id/action_secondFragment_to_studentlog"
+            app:destination="@id/studentlog" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 
     <fragment
         android:id="@+id/padagogue"
         android:name="com.example.mykidsreg.Padagogue"
         android:label="fragment_padagogue"
-        tools:layout="@layout/fragment_padagogue" />
+        tools:layout="@layout/fragment_padagogue" >
+        <action
+            android:id="@+id/action_padagogue_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_message"
         android:name="com.example.mykidsreg.fragment_message"
@@ -70,5 +86,26 @@
         <action
             android:id="@+id/action_fragment_message_to_firstFragment"
             app:destination="@id/firstFragment" />
+        <action
+            android:id="@+id/action_fragment_message_to_secondFragment"
+            app:destination="@id/secondFragment" />
+        <action
+            android:id="@+id/action_fragment_message_to_studentlog"
+            app:destination="@id/studentlog" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentlog"
+        android:name="com.example.mykidsreg.fragments.StudentLogFragment"
+        android:label="fragment_studentlog"
+        tools:layout="@layout/fragment_studentlog" >
+        <action
+            android:id="@+id/action_studentlog_to_secondFragment"
+            app:destination="@id/secondFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_studentlog_to_fragment_message"
+            app:destination="@id/fragment_message" />
     </fragment>
 </navigation>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="HolidaySwitchTheme" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/holiday_text</item>
         <item name="android:thumbTint">@color/holiday_text</item>
         <item name="android:trackTint">#FFC0CB</item> <!-- Light pink for track -->
+    </style>
+
+    <style name="Widget.Theme.MyKidsReg.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 </resources>

@@ -4,28 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Transparent box behind the name -->
+    <!-- Top section with the name of the person you are chatting with -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/transparent_background"
-        android:padding="16dp">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@drawable/app_background">
 
-        <!-- Top section with the name of the person you are chatting with -->
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_keyboard_backspace_24"
+
+            android:textColor="@android:color/white" />
+
         <TextView
             android:id="@+id/textViewChattingWithName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chatting with: John Doe"
-            android:textColor="@android:color/black"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp" />
     </LinearLayout>
 
     <!-- Message history section -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="352dp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -41,12 +51,12 @@
         android:id="@+id/textViewAutoDeletionMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dine beskeder slettes automatisk efter 365 dage"
         android:textColor="#FFFFFF"
         android:background="#80000000"
         android:padding="8dp"
         android:textSize="14sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:visibility="gone" />
 
     <!-- Bottom section with the text field for typing messages -->
     <LinearLayout
@@ -69,7 +79,8 @@
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send" />
-    </LinearLayout>
 
+            android:background="@drawable/baseline_send_24"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </LinearLayout>

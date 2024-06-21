@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/help_and_contact"
-
     tools:context=".fragments.HelpAndContactFragment">
 
     <LinearLayout
@@ -73,5 +72,14 @@
             android:layout_marginBottom="16dp"
             android:gravity="center" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="179dp"
+            android:gravity="end">
+
+            <include layout="@layout/footer_navigation" />
+        </LinearLayout>
+
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>
